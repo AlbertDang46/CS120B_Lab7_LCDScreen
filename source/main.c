@@ -54,35 +54,6 @@ unsigned char incButton;
 unsigned char decButton;
 unsigned char counter;
 
-void Tick();
-
-int main(void) {
-    DDRC = 0xFF; PORTC = 0x00;
-    DDRD = 0xFF; PORTD = 0x00;
-  
-    
-    state = Init;
-    counter = 0;
-   
-    LCD_init();
-    //LCD_Cursor(1);
-    //LCD_WriteCommand(counter + '0');
-    const unsigned char* hw = "Hello World";
-    LCD_DisplayString(1, hw);
-    TimerSet(1000);
-    TimerOn();    
- 
-    while(1) {
-        //incButton = (~PINA & 0x01);
-        //decButton = (~PINA & 0x02);
-        //Tick();
-        while(!TimerFlag);
-        TimerFlag = 0;
-    }
-    
-    return 1;
-}
-
 void Tick() {
     switch(state) {
         case Init:
@@ -149,5 +120,31 @@ void Tick() {
             break;
     }
     LCD_Cursor(1);
-    LCD_WriteCommand(counter + '0');   
+    LCD_WriteData(counter + '0');   
 }
+
+int main(void) {
+    DDRC = 0xFF; PORTC = 0x00;
+    DDRD = 0xFF; PORTD = 0x00; 
+    
+    state = Init;
+    counter = 0;
+   
+    LCD_init();
+    //LCD_Cursor(1);
+    //LCD_WriteData(counter + '0');
+    LCD_DisplayString(1, "Hello World");
+    TimerSet(1000);
+    TimerOn();    
+ 
+    while(1) {
+        //incButton = (~PINA & 0x01);
+        //decButton = (~PINA & 0x02);
+        //Tick();
+        while(!TimerFlag);
+        TimerFlag = 0;
+    }
+
+    return 1;
+}
+
