@@ -124,6 +124,7 @@ void Tick() {
 }
 
 int main(void) {
+    DDRA = 0x00; PORTA = 0xFF;
     DDRC = 0xFF; PORTC = 0x00;
     DDRD = 0xFF; PORTD = 0x00; 
     
@@ -131,16 +132,16 @@ int main(void) {
     counter = 0;
    
     LCD_init();
-    //LCD_Cursor(1);
-    //LCD_WriteData(counter + '0');
-    LCD_DisplayString(1, "Hello World");
+    LCD_Cursor(1);
+    LCD_WriteData(counter + '0');
+    
     TimerSet(1000);
     TimerOn();    
  
     while(1) {
-        //incButton = (~PINA & 0x01);
-        //decButton = (~PINA & 0x02);
-        //Tick();
+        incButton = (~PINA & 0x01);
+        decButton = (~PINA & 0x02);
+        Tick();
         while(!TimerFlag);
         TimerFlag = 0;
     }
